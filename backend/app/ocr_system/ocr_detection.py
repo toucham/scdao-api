@@ -13,23 +13,27 @@ def detect_text(path):
 
     response = client.text_detection(image=image)
     texts = response.text_annotations
+    output_arr = []
     print('Texts:')
 
     for text in texts:
-        print('"{}"'.format(text.description))
-
+        #print("{}".format(text.description))
+        output_arr.append(text.description)
         vertices = (['({},{})'.format(vertex.x, vertex.y)
                     for vertex in text.bounding_poly.vertices])
 
-        print('bounds: {}'.format(','.join(vertices)))
+        #print('bounds: {}'.format(','.join(vertices)))
 
     if response.error.message:
         raise Exception(
             '{}\nFor more info on error messages, check: '
             'https://cloud.google.com/apis/design/errors'.format(
                 response.error.message))
+
+    return output_arr
 def main():        
-    detect_text('test_image.png')
+    texts = detect_text('test_image.png')
+    print(texts[0])
     return 0
 
 if __name__ == '__main__':
