@@ -1,11 +1,8 @@
 FROM python:3.10
 
 WORKDIR /app
-
 ENV PYTHONUNBUFFERED 1
-
 RUN apt update && \
     apt install -y postgresql-client
-
-COPY requirements.txt  /app
+COPY requirements.txt .
 RUN pip install -r requirements.txt
